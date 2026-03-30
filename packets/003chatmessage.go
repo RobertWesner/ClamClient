@@ -14,10 +14,11 @@ func (p Packet3ChatMessage) Id() uint8 {
 }
 
 func (p Packet3ChatMessage) Bytes() ([]byte, error) {
+	var err error
+
 	writer := NewWriter()
 
-	err := writer.WriteString16(p.Message)
-	if err != nil {
+	if err = writer.WriteString16(p.Message); err != nil {
 		return nil, fmt.Errorf("003 write message: %w", err)
 	}
 
@@ -25,12 +26,11 @@ func (p Packet3ChatMessage) Bytes() ([]byte, error) {
 }
 
 func (p Packet3ChatMessage) Read(reader PacketReader) error {
-	message, err := reader.String16()
-	if err != nil {
+	var err error
+
+	if p.Message, err = reader.String16(); err != nil {
 		return fmt.Errorf("003 read message: %w", err)
 	}
-
-	p.Message = message
 
 	return nil
 }

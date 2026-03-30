@@ -14,10 +14,11 @@ func (p Packet2Handshake) Id() uint8 {
 }
 
 func (p Packet2Handshake) Bytes() ([]byte, error) {
+	var err error
+
 	writer := NewWriter()
 
-	err := writer.WriteString16(p.UsernameOrConnectionHash)
-	if err != nil {
+	if err = writer.WriteString16(p.UsernameOrConnectionHash); err != nil {
 		return nil, fmt.Errorf("002 write username: %w", err)
 	}
 
@@ -25,12 +26,11 @@ func (p Packet2Handshake) Bytes() ([]byte, error) {
 }
 
 func (p Packet2Handshake) Read(reader PacketReader) error {
-	username, err := reader.String16()
-	if err != nil {
+	var err error
+
+	if p.UsernameOrConnectionHash, err = reader.String16(); err != nil {
 		return fmt.Errorf("002 read username: %w", err)
 	}
-
-	p.UsernameOrConnectionHash = username
 
 	return nil
 }

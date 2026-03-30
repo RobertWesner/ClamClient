@@ -1,7 +1,8 @@
 package client
 
 type Commands struct {
-	chat chan string
+	chat       chan string
+	disconnect chan struct{}
 }
 
 func NewCommands() *Commands {
@@ -16,4 +17,12 @@ func (c *Commands) doChat(message string) {
 
 func (c *Commands) chatChan() <-chan string {
 	return c.chat
+}
+
+func (c *Commands) doDisconnect() {
+	close(c.disconnect)
+}
+
+func (c *Commands) disconnectChan() <-chan struct{} {
+	return c.disconnect
 }

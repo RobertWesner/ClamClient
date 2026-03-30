@@ -43,6 +43,7 @@ func (pc PacketConn) Read() (Packet, error) {
 		return nil, fmt.Errorf("PacketConn read id: %w", err)
 	}
 
+	fmt.Printf("0x%X\n", buf)
 	packet := func() Packet {
 		switch buf[0] {
 		case 0x00:
@@ -72,7 +73,7 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x0C:
 			// TODO
 		case 0x0D:
-			// TODO
+			return Packet13PlayerPositionAndLook{}
 		case 0x0E:
 			// TODO
 		case 0x0F:
@@ -120,9 +121,9 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x28:
 			// TODO
 		case 0x32:
-			// TODO
+			return Packet50PreChunk{}
 		case 0x33:
-			// TODO
+			return Packet51MapChunk{}
 		case 0x34:
 			// TODO
 		case 0x35:
@@ -134,7 +135,7 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x3D:
 			// TODO
 		case 0x46:
-			// TODO
+			return Packet70NewOrInvalidState{}
 		case 0x47:
 			// TODO
 		case 0x64:
@@ -144,9 +145,9 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x66:
 			// TODO
 		case 0x67:
-			// TODO
+			return Packet103SetSlot{}
 		case 0x68:
-			// TODO
+			return Packet104WindowItems{}
 		case 0x69:
 			// TODO
 		case 0x6A:
@@ -158,7 +159,7 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0xC8:
 			// TODO
 		case 0xFF:
-			// TODO
+			return Packet255Disconnect{}
 		}
 
 		return nil

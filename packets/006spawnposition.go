@@ -1,6 +1,7 @@
 package packets
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -15,45 +16,23 @@ func (p Packet6SpawnPosition) Id() uint8 {
 }
 
 func (p Packet6SpawnPosition) Bytes() ([]byte, error) {
-	writer := NewWriter()
-
-	err := writer.Write(p.X)
-	if err != nil {
-		return nil, fmt.Errorf("006 write x: %w", err)
-	}
-
-	err = writer.Write(p.Y)
-	if err != nil {
-		return nil, fmt.Errorf("006 write y: %w", err)
-	}
-
-	err = writer.Write(p.Z)
-	if err != nil {
-		return nil, fmt.Errorf("006 write z: %w", err)
-	}
-
-	return writer.Bytes(), nil
+	return []byte{}, errors.New("006 server->client packets should never be sent")
 }
 
 func (p Packet6SpawnPosition) Read(reader PacketReader) error {
-	x, err := reader.Int32()
-	if err != nil {
+	var err error
+
+	if p.X, err = reader.Int32(); err != nil {
 		return fmt.Errorf("006 read x: %w", err)
 	}
 
-	y, err := reader.Int32()
-	if err != nil {
+	if p.Y, err = reader.Int32(); err != nil {
 		return fmt.Errorf("006 read y: %w", err)
 	}
 
-	z, err := reader.Int32()
-	if err != nil {
+	if p.Z, err = reader.Int32(); err != nil {
 		return fmt.Errorf("006 read z: %w", err)
 	}
-
-	p.X = x
-	p.Y = y
-	p.Z = z
 
 	return nil
 }

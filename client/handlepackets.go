@@ -42,23 +42,43 @@ func (c *Client) handlePackets() {
 			close(c.ready)
 		case packets.Packet31EntityRelativeMove:
 			select {
-			case c.events.on.entityMove <- EntityMoveEvent{p.EntityID, game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}:
+			case c.events.on.entityMove <- EntityMoveEvent{int(p.EntityId), game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}:
 			default:
 			}
 		case packets.Packet32EntityLook:
 			select {
-			case c.events.on.entityLook <- EntityLookEvent{p.EntityID, game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}:
+			case c.events.on.entityLook <- EntityLookEvent{int(p.EntityId), game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}:
 			default:
 			}
 		case packets.Packet33LookAndRelativeMove:
 			select {
-			case c.events.on.entityMove <- EntityMoveEvent{p.EntityID, game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}:
+			case c.events.on.entityMove <- EntityMoveEvent{int(p.EntityId), game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}:
 			default:
 			}
 			select {
-			case c.events.on.entityLook <- EntityLookEvent{p.EntityID, game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}:
+			case c.events.on.entityLook <- EntityLookEvent{int(p.EntityId), game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}:
 			default:
 			}
+		case packets.Packet51MapChunk:
+			// TODO TODO TODO !!!
+			HandleChunkData(p)
+		case packets.Packet70NewOrInvalidState:
+			switch p.Reason {
+			case 0:
+				// ignore
+			case 1:
+				c.events.on.rain <- true
+			case 2:
+				c.events.on.rain <- false
+			default:
+				// ignore
+			}
+		case packets.Packet103SetSlot:
+			c.events.on.setSlot <- SetSlotEvent{int(p.WindowId), int(p.Slot), int(p.ItemId), int(p.ItemCount), int(p.ItemUses)}
+		case packets.Packet104WindowItems:
+			c.events.on.windowItems <- WindowItemsEvent{int(p.WindowId), int(p.Count), p.Payload}
+		case packets.Packet255Disconnect:
+			c.events.on.disconnect <- p.Reason
 		}
 	}
 }

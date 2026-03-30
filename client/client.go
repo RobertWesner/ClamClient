@@ -56,6 +56,7 @@ func Connect(ip string, username string) (c *Client) {
 		commands: NewCommands(),
 		events:   NewEvents(),
 	}
+	c.ctx, c.cancel = context.WithCancel(context.Background())
 
 	conn, err := net.Dial("tcp", ip)
 	if err != nil {
@@ -63,7 +64,8 @@ func Connect(ip string, username string) (c *Client) {
 
 		return
 	}
-	defer func() {
+
+	go func() {
 		<-c.ctx.Done()
 		_ = conn.Close()
 	}()
@@ -83,8 +85,6 @@ func Connect(ip string, username string) (c *Client) {
 
 	keepAliveTicker := time.NewTicker(30 * time.Second)
 	defer keepAliveTicker.Stop()
-
-	c.ctx, c.cancel = context.WithCancel(context.Background())
 
 	go func() {
 		for {
@@ -107,6 +107,8 @@ func Connect(ip string, username string) (c *Client) {
 
 		return
 	}
+
+	go c.loopControls()
 
 	return c
 }

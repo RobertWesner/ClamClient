@@ -10,41 +10,57 @@ import (
 )
 
 func main() {
-	c := client.Connect("localhost:25565", "RobertWesner")
+	c := client.Connect("localhost:25565", "RobertWesner2")
 
 	go func() {
+		select {
+		case <-c.Done():
+			return
+		case <-c.Ready():
+		}
+
+		scanner := bufio.NewScanner(os.Stdin)
+
 		for {
 			select {
 			case <-c.Done():
 				return
-			case <-c.Ready():
-				fmt.Print("$ ")
-				scanner := bufio.NewScanner(os.Stdin)
-
-				for scanner.Scan() {
-					line := scanner.Text()
-
-					if line == "/exit" {
-						c.Close()
-
-						return
-					}
-
-					c.Chat(line)
-				}
-
-				if err := scanner.Err(); err != nil {
-					log.Fatal(err)
-				}
+			default:
 			}
+
+			fmt.Print("> ")
+			if !scanner.Scan() {
+				if err := scanner.Err(); err != nil {
+					log.Print(err)
+				}
+				c.Close()
+
+				return
+			}
+
+			line := scanner.Text()
+			if line == "/exit" {
+				c.Close()
+
+				return
+			}
+
+			c.Chat(line)
 		}
 	}()
 
 	go func() {
 		for {
-			fmt.Println("---")
-			message := <-c.Events().Chat()
-			fmt.Println(message)
+			select {
+			case message := <-c.Events().Chat():
+				fmt.Println(message)
+			case <-c.Events().SetSlot():
+				break
+			case <-c.Events().WindowItems():
+				break
+			case reason := <-c.Events().Disconnect():
+				fmt.Println(reason)
+			}
 		}
 	}()
 

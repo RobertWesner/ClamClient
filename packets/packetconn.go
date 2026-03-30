@@ -106,11 +106,11 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x1E:
 			// TODO
 		case 0x1F:
-			// TODO
+			return Packet31EntityRelativeMove{}
 		case 0x20:
-			// TODO
+			return Packet32EntityLook{}
 		case 0x21:
-			// TODO
+			return Packet33LookAndRelativeMove{}
 		case 0x22:
 			// TODO
 		case 0x26:
@@ -165,7 +165,7 @@ func (pc PacketConn) Read() (Packet, error) {
 	}()
 
 	if packet == nil {
-		return nil, fmt.Errorf("unknown packet %x", buf[0])
+		return nil, fmt.Errorf("unknown packet 0x%X", buf[0])
 	}
 
 	err := packet.Read(pc.reader)

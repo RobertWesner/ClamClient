@@ -1,8 +1,8 @@
 package client
 
 import (
-	"ClamClient/game"
-	"ClamClient/packets"
+	"clamclient/game"
+	"clamclient/packets"
 	"fmt"
 )
 
@@ -38,8 +38,27 @@ func (c *Client) handlePackets() {
 		case packets.Packet6SpawnPosition:
 			fmt.Println(p) // TODO: remove
 
-			c.state.SpawnPosition = game.Vec3{X: float64(p.X), Y: float64(p.Y), Z: float64(p.Z)}
+			c.state.SpawnPosition = game.NewVec3(float64(p.X), float64(p.Y), float64(p.Z))
 			close(c.ready)
+		case packets.Packet31EntityRelativeMove:
+			select {
+			case c.events.on.entityMove <- EntityMoveEvent{p.EntityID, game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}:
+			default:
+			}
+		case packets.Packet32EntityLook:
+			select {
+			case c.events.on.entityLook <- EntityLookEvent{p.EntityID, game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}:
+			default:
+			}
+		case packets.Packet33LookAndRelativeMove:
+			select {
+			case c.events.on.entityMove <- EntityMoveEvent{p.EntityID, game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}:
+			default:
+			}
+			select {
+			case c.events.on.entityLook <- EntityLookEvent{p.EntityID, game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}:
+			default:
+			}
 		}
 	}
 }

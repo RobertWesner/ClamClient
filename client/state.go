@@ -1,6 +1,6 @@
 package client
 
-import "ClamClient/game"
+import "clamclient/game"
 
 type State struct {
 	EntityId       int32

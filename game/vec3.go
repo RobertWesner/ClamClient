@@ -6,6 +6,14 @@ type Vec3 struct {
 	Z float64
 }
 
+func NewVec3(x, y, z float64) Vec3 {
+	return Vec3{
+		X: x,
+		Y: y,
+		Z: z,
+	}
+}
+
 func (v Vec3) Add(o Vec3) Vec3 {
 	return Vec3{
 		X: v.X + o.X,

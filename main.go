@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ClamClient/client"
 	"bufio"
+	"clamclient/client"
 	"fmt"
 	"log"
 	"log/slog"

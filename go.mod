@@ -1,4 +1,4 @@
-module ClamClient
+module clamclient
 
 go 1.26
 

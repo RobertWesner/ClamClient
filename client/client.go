@@ -1,7 +1,7 @@
 package client
 
 import (
-	"ClamClient/packets"
+	"clamclient/packets"
 	"context"
 	"fmt"
 	"log/slog"

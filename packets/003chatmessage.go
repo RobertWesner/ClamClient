@@ -10,7 +10,7 @@ type Packet3ChatMessage struct {
 }
 
 func (p Packet3ChatMessage) Id() uint8 {
-	return 0x02
+	return 0x03
 }
 
 func (p Packet3ChatMessage) Bytes() ([]byte, error) {

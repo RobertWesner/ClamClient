@@ -9,9 +9,9 @@ type Packet51MapChunk struct {
 	X              int32
 	Y              int16
 	Z              int32
-	SizeX          int8 // SizeX is Actual X Size -1
-	SizeY          int8 // SizeY is Actual Y Size -1
-	SizeZ          int8 // SizeZ is Actual Zs Size -1
+	SizeX          uint8 // SizeX is Actual X Size -1
+	SizeY          uint8 // SizeY is Actual Y Size -1
+	SizeZ          uint8 // SizeZ is Actual Zs Size -1
 	CompressedSize int32
 	CompressedData []byte
 }
@@ -39,15 +39,15 @@ func (p Packet51MapChunk) Read(reader PacketReader) error {
 		return fmt.Errorf("051 read z: %w", err)
 	}
 
-	if p.SizeX, err = reader.Int8(); err != nil {
+	if p.SizeX, err = reader.Byte(); err != nil {
 		return fmt.Errorf("051 read sx: %w", err)
 	}
 
-	if p.SizeY, err = reader.Int8(); err != nil {
+	if p.SizeY, err = reader.Byte(); err != nil {
 		return fmt.Errorf("051 read sy: %w", err)
 	}
 
-	if p.SizeZ, err = reader.Int8(); err != nil {
+	if p.SizeZ, err = reader.Byte(); err != nil {
 		return fmt.Errorf("051 read sz: %w", err)
 	}
 

@@ -2,10 +2,10 @@ package client
 
 import (
 	"bytes"
-	"clamclient/packets"
 	"compress/zlib"
 	"errors"
 	"fmt"
+	"github.com/RobertWesner/ClamClient/core/packets"
 	"io"
 	"log"
 	"os"

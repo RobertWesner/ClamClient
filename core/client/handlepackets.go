@@ -1,9 +1,10 @@
 package client
 
 import (
-	"clamclient/game"
-	"clamclient/packets"
 	"fmt"
+
+	"github.com/RobertWesner/ClamClient/core/game"
+	"github.com/RobertWesner/ClamClient/core/packets"
 )
 
 func (c *Client) handlePackets() {
@@ -77,6 +78,8 @@ func (c *Client) handlePackets() {
 			c.events.on.setSlot <- SetSlotEvent{int(p.WindowId), int(p.Slot), int(p.ItemId), int(p.ItemCount), int(p.ItemUses)}
 		case packets.Packet104WindowItems:
 			c.events.on.windowItems <- WindowItemsEvent{int(p.WindowId), int(p.Count), p.Payload}
+		case packets.Packet106Transaction:
+			c.events.on.transaction <- TransactionEvent{int(p.WindowId), int(p.ActionNumber), p.Accepted}
 		case packets.Packet255Disconnect:
 			c.events.on.disconnect <- p.Reason
 		}

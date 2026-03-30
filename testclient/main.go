@@ -2,11 +2,12 @@ package main
 
 import (
 	"bufio"
-	"clamclient/client"
 	"fmt"
 	"log"
 	"log/slog"
 	"os"
+
+	"github.com/RobertWesner/ClamClient/core/client"
 )
 
 func main() {
@@ -57,6 +58,8 @@ func main() {
 			case <-c.Events().SetSlot():
 				break
 			case <-c.Events().WindowItems():
+				break
+			case <-c.Events().Transaction():
 				break
 			case reason := <-c.Events().Disconnect():
 				fmt.Println(reason)

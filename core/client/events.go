@@ -1,8 +1,8 @@
 package client
 
 import (
-	"clamclient/game"
-	"clamclient/packets"
+	"github.com/RobertWesner/ClamClient/core/game"
+	"github.com/RobertWesner/ClamClient/core/packets"
 )
 
 type PlayerMoveAndLookEvent struct {
@@ -43,6 +43,12 @@ type WindowItemsEvent struct {
 	Payload  packets.InventoryData
 }
 
+type TransactionEvent struct {
+	WindowId     int
+	ActionNumber int
+	Accepted     bool
+}
+
 type Events struct {
 	chat              <-chan string
 	playerMoveAndLook <-chan PlayerMoveAndLookEvent
@@ -51,6 +57,7 @@ type Events struct {
 	rain              <-chan bool
 	setSlot           <-chan SetSlotEvent
 	windowItems       <-chan WindowItemsEvent
+	transaction       <-chan TransactionEvent
 	disconnect        <-chan string
 
 	on eventsOn
@@ -64,6 +71,7 @@ type eventsOn struct {
 	rain              chan<- bool
 	setSlot           chan<- SetSlotEvent
 	windowItems       chan<- WindowItemsEvent
+	transaction       chan<- TransactionEvent
 	disconnect        chan<- string
 }
 
@@ -75,6 +83,7 @@ func NewEvents() *Events {
 	rain := make(chan bool)
 	setSlot := make(chan SetSlotEvent)
 	windowItems := make(chan WindowItemsEvent)
+	transaction := make(chan TransactionEvent)
 	disconnect := make(chan string)
 
 	return &Events{
@@ -85,6 +94,7 @@ func NewEvents() *Events {
 		rain:              rain,
 		setSlot:           setSlot,
 		windowItems:       windowItems,
+		transaction:       transaction,
 		disconnect:        disconnect,
 		on: eventsOn{
 			chat:              chat,
@@ -94,6 +104,7 @@ func NewEvents() *Events {
 			setSlot:           setSlot,
 			rain:              rain,
 			windowItems:       windowItems,
+			transaction:       transaction,
 			disconnect:        disconnect,
 		},
 	}
@@ -125,6 +136,10 @@ func (e *Events) SetSlot() <-chan SetSlotEvent {
 
 func (e *Events) WindowItems() <-chan WindowItemsEvent {
 	return e.windowItems
+}
+
+func (e *Events) Transaction() <-chan TransactionEvent {
+	return e.transaction
 }
 
 func (e *Events) Disconnect() <-chan string {

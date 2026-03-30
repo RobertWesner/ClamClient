@@ -1,8 +1,9 @@
 package client
 
 import (
-	"clamclient/packets"
 	"log/slog"
+
+	"github.com/RobertWesner/ClamClient/core/packets"
 )
 
 func (c *Client) loopControls() {

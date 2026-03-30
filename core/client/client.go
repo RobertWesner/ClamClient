@@ -1,12 +1,13 @@
 package client
 
 import (
-	"clamclient/packets"
 	"context"
 	"fmt"
 	"log/slog"
 	"net"
 	"time"
+
+	"github.com/RobertWesner/ClamClient/core/packets"
 )
 
 type Client struct {

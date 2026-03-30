@@ -1,4 +1,4 @@
-module clamclient
+module github.com/RobertWesner/ClamClient/clamclient
 
 go 1.26
 

@@ -151,7 +151,7 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x69:
 			// TODO
 		case 0x6A:
-			// TODO
+			return Packet106Transaction{}
 		case 0x82:
 			// TODO
 		case 0x83:

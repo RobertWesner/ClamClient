@@ -40,21 +40,12 @@ func (pr *PacketReader) Skip(n int) error {
 }
 
 func (pr *PacketReader) Bool() (bool, error) {
-	v, err := pr.Int8()
+	v, err := pr.Byte()
 	if err != nil {
 		return false, err
 	}
 
 	return v != 0, nil
-}
-
-func (pr *PacketReader) Int8() (int8, error) {
-	var buf [1]byte
-	if _, err := io.ReadFull(pr.r, buf[:]); err != nil {
-		return 0, err
-	}
-
-	return int8(buf[0]), nil
 }
 
 func (pr *PacketReader) Int16() (int16, error) {

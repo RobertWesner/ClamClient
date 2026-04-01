@@ -42,24 +42,12 @@ func (c *Client) handlePackets() {
 			c.state.SpawnPosition = game.NewVec3(float64(p.X), float64(p.Y), float64(p.Z))
 			close(c.ready)
 		case packets.Packet31EntityRelativeMove:
-			select {
-			case c.events.on.entityMove <- EntityMoveEvent{int(p.EntityId), game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}:
-			default:
-			}
+			c.events.on.entityMove <- EntityMoveEvent{int(p.EntityId), game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}
 		case packets.Packet32EntityLook:
-			select {
-			case c.events.on.entityLook <- EntityLookEvent{int(p.EntityId), game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}:
-			default:
-			}
+			c.events.on.entityLook <- EntityLookEvent{int(p.EntityId), game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}
 		case packets.Packet33LookAndRelativeMove:
-			select {
-			case c.events.on.entityMove <- EntityMoveEvent{int(p.EntityId), game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}:
-			default:
-			}
-			select {
-			case c.events.on.entityLook <- EntityLookEvent{int(p.EntityId), game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}:
-			default:
-			}
+			c.events.on.entityMove <- EntityMoveEvent{int(p.EntityId), game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}
+			c.events.on.entityLook <- EntityLookEvent{int(p.EntityId), game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}
 		case packets.Packet51MapChunk:
 			// TODO TODO TODO !!!
 			HandleChunkData(p)

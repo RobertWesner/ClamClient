@@ -55,6 +55,10 @@ func main() {
 			select {
 			case message := <-c.Events().Chat():
 				fmt.Println(message)
+			case <-c.Events().EntityMove():
+				break
+			case <-c.Events().EntityLook():
+				break
 			case <-c.Events().SetSlot():
 				break
 			case <-c.Events().WindowItems():

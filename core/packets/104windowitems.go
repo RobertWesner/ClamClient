@@ -6,12 +6,12 @@ import (
 )
 
 type Packet104WindowItems struct {
-	WindowId uint8
+	WindowID uint8
 	Count    int16
 	Payload  InventoryData
 }
 
-func (p Packet104WindowItems) Id() uint8 {
+func (p Packet104WindowItems) ID() uint8 {
 	return 0x68
 }
 
@@ -22,7 +22,7 @@ func (p Packet104WindowItems) Bytes() ([]byte, error) {
 func (p Packet104WindowItems) Read(reader PacketReader) error {
 	var err error
 
-	if p.WindowId, err = reader.Byte(); err != nil {
+	if p.WindowID, err = reader.Byte(); err != nil {
 		return fmt.Errorf("104 read windowid: %w", err)
 	}
 
@@ -38,7 +38,7 @@ func (p Packet104WindowItems) Read(reader PacketReader) error {
 }
 
 type ItemData struct {
-	Id    int16
+	ID    int16
 	Count uint8
 	Uses  int16
 }
@@ -52,12 +52,12 @@ func parseInventoryPayload(reader PacketReader, count int16) (InventoryData, err
 
 	for range count {
 		item := ItemData{}
-		item.Id, err = reader.Int16()
+		item.ID, err = reader.Int16()
 		if err != nil {
 			return InventoryData{}, fmt.Errorf("window items id: %w", err)
 		}
 
-		if item.Id > -1 {
+		if item.ID > -1 {
 			item.Count, err = reader.Byte()
 			if err != nil {
 				return InventoryData{}, fmt.Errorf("window items count: %w", err)

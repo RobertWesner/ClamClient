@@ -15,7 +15,7 @@ func NewCommands() *Commands {
 }
 
 type TransactionCommand struct {
-	WindowId     int
+	WindowID     int
 	ActionNumber int
 	Accepted     bool
 }
@@ -37,12 +37,12 @@ func (c *Commands) disconnectChan() <-chan struct{} {
 }
 
 func (c *Commands) doTransaction(
-	windowId int,
+	windowID int,
 	actionNumber int,
 	accepted bool,
 ) {
 	c.transaction <- TransactionCommand{
-		WindowId:     windowId,
+		WindowID:     windowID,
 		ActionNumber: actionNumber,
 		Accepted:     accepted,
 	}

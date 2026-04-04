@@ -6,13 +6,13 @@ import (
 )
 
 type Packet31EntityRelativeMove struct {
-	EntityId int32
+	EntityID int32
 	DX       uint8
 	DY       uint8
 	DZ       uint8
 }
 
-func (p Packet31EntityRelativeMove) Id() uint8 {
+func (p Packet31EntityRelativeMove) ID() uint8 {
 	return 0x1F
 }
 
@@ -23,7 +23,7 @@ func (p Packet31EntityRelativeMove) Bytes() ([]byte, error) {
 func (p Packet31EntityRelativeMove) Read(reader PacketReader) error {
 	var err error
 
-	if p.EntityId, err = reader.Int32(); err != nil {
+	if p.EntityID, err = reader.Int32(); err != nil {
 		return fmt.Errorf("031 read entityid: %w", err)
 	}
 

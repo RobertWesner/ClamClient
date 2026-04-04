@@ -6,7 +6,7 @@ import (
 )
 
 type Packet33LookAndRelativeMove struct {
-	EntityId int32
+	EntityID int32
 	DX       uint8
 	DY       uint8
 	DZ       uint8
@@ -14,7 +14,7 @@ type Packet33LookAndRelativeMove struct {
 	Pitch    Uint8angle // 64 = 90°
 }
 
-func (p Packet33LookAndRelativeMove) Id() uint8 {
+func (p Packet33LookAndRelativeMove) ID() uint8 {
 	return 0x21
 }
 
@@ -25,7 +25,7 @@ func (p Packet33LookAndRelativeMove) Bytes() ([]byte, error) {
 func (p Packet33LookAndRelativeMove) Read(reader PacketReader) error {
 	var err error
 
-	if p.EntityId, err = reader.Int32(); err != nil {
+	if p.EntityID, err = reader.Int32(); err != nil {
 		return fmt.Errorf("033 read entityid: %w", err)
 	}
 

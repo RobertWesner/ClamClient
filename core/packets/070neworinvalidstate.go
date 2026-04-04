@@ -9,7 +9,7 @@ type Packet70NewOrInvalidState struct {
 	Reason uint8
 }
 
-func (p Packet70NewOrInvalidState) Id() uint8 {
+func (p Packet70NewOrInvalidState) ID() uint8 {
 	return 0x46
 }
 

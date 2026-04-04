@@ -9,7 +9,7 @@ type Packet2Handshake struct {
 	UsernameOrConnectionHash string
 }
 
-func (p Packet2Handshake) Id() uint8 {
+func (p Packet2Handshake) ID() uint8 {
 	return 0x02
 }
 

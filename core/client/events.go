@@ -13,12 +13,12 @@ type PlayerMoveAndLookEvent struct {
 }
 
 type EntityMoveEvent struct {
-	EntityId int
+	EntityID int
 	Vector   game.Vec3
 }
 
 type EntityLookEvent struct {
-	EntityId int
+	EntityID int
 	Angle    game.Angle
 }
 
@@ -30,21 +30,21 @@ type MapChunkEvent struct {
 }
 
 type SetSlotEvent struct {
-	WindowId  int
+	WindowID  int
 	Slot      int
-	ItemId    int
+	ItemID    int
 	ItemCount int
 	ItemUses  int
 }
 
 type WindowItemsEvent struct {
-	WindowId int
+	WindowID int
 	Count    int
 	Payload  packets.InventoryData
 }
 
 type TransactionEvent struct {
-	WindowId     int
+	WindowID     int
 	ActionNumber int
 	Accepted     bool
 }

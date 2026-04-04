@@ -9,7 +9,7 @@ type Packet3ChatMessage struct {
 	Message string
 }
 
-func (p Packet3ChatMessage) Id() uint8 {
+func (p Packet3ChatMessage) ID() uint8 {
 	return 0x03
 }
 

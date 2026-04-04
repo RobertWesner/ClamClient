@@ -6,12 +6,12 @@ import (
 )
 
 type Packet32EntityLook struct {
-	EntityId int32
+	EntityID int32
 	Yaw      Uint8angle // 64 = 90°
 	Pitch    Uint8angle // 64 = 90°
 }
 
-func (p Packet32EntityLook) Id() uint8 {
+func (p Packet32EntityLook) ID() uint8 {
 	return 0x20
 }
 
@@ -22,7 +22,7 @@ func (p Packet32EntityLook) Bytes() ([]byte, error) {
 func (p Packet32EntityLook) Read(reader PacketReader) error {
 	var err error
 
-	if p.EntityId, err = reader.Int32(); err != nil {
+	if p.EntityID, err = reader.Int32(); err != nil {
 		return fmt.Errorf("032 read entityid: %w", err)
 	}
 

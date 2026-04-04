@@ -11,7 +11,7 @@ type Packet6SpawnPosition struct {
 	Z int32
 }
 
-func (p Packet6SpawnPosition) Id() uint8 {
+func (p Packet6SpawnPosition) ID() uint8 {
 	return 0x06
 }
 

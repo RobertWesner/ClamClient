@@ -8,7 +8,7 @@ type Packet255Disconnect struct {
 	Reason string
 }
 
-func (p Packet255Disconnect) Id() uint8 {
+func (p Packet255Disconnect) ID() uint8 {
 	return 0xFF
 }
 

@@ -2,7 +2,7 @@ package packets
 
 type Packet0KeepAlive struct{}
 
-func (p Packet0KeepAlive) Id() uint8 {
+func (p Packet0KeepAlive) ID() uint8 {
 	return 0x00
 }
 

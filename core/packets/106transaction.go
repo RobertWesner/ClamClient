@@ -5,12 +5,12 @@ import (
 )
 
 type Packet106Transaction struct {
-	WindowId     uint8
+	WindowID     uint8
 	ActionNumber int16
 	Accepted     bool
 }
 
-func (p Packet106Transaction) Id() uint8 {
+func (p Packet106Transaction) ID() uint8 {
 	return 0x6A
 }
 
@@ -19,7 +19,7 @@ func (p Packet106Transaction) Bytes() ([]byte, error) {
 
 	writer := NewWriter()
 
-	if err = writer.Write(p.WindowId); err != nil {
+	if err = writer.Write(p.WindowID); err != nil {
 		return nil, fmt.Errorf("106 write windowid: %w", err)
 	}
 
@@ -37,8 +37,8 @@ func (p Packet106Transaction) Bytes() ([]byte, error) {
 func (p Packet106Transaction) Read(reader PacketReader) error {
 	var err error
 
-	if p.WindowId, err = reader.Byte(); err != nil {
-		return fmt.Errorf("106 read windowId: %w", err)
+	if p.WindowID, err = reader.Byte(); err != nil {
+		return fmt.Errorf("106 read windowid: %w", err)
 	}
 
 	if p.ActionNumber, err = reader.Int16(); err != nil {
@@ -53,12 +53,12 @@ func (p Packet106Transaction) Read(reader PacketReader) error {
 }
 
 func NewPacket106Transaction(
-	windowId uint8,
+	windowID uint8,
 	actionNumber int16,
 	accepted bool,
 ) Packet106Transaction {
 	return Packet106Transaction{
-		WindowId:     windowId,
+		WindowID:     windowID,
 		ActionNumber: actionNumber,
 		Accepted:     accepted,
 	}

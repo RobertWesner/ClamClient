@@ -9,7 +9,7 @@ type Packet4TimeUpdate struct {
 	Time int64
 }
 
-func (p Packet4TimeUpdate) Id() uint8 {
+func (p Packet4TimeUpdate) ID() uint8 {
 	return 0x04
 }
 

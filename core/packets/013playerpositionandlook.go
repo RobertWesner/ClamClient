@@ -14,7 +14,7 @@ type Packet13PlayerPositionAndLook struct {
 	OnGround bool
 }
 
-func (p Packet13PlayerPositionAndLook) Id() uint8 {
+func (p Packet13PlayerPositionAndLook) ID() uint8 {
 	return 0x0D
 }
 

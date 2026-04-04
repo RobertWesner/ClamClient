@@ -6,13 +6,13 @@ import (
 )
 
 type Packet1Login struct {
-	ProtocolVersionOrEntityId int32
+	ProtocolVersionOrEntityID int32
 	Username                  string
 	MapSeed                   int64
 	Dimension                 byte
 }
 
-func (p Packet1Login) Id() uint8 {
+func (p Packet1Login) ID() uint8 {
 	return 0x01
 }
 
@@ -21,7 +21,7 @@ func (p Packet1Login) Bytes() ([]byte, error) {
 
 	writer := NewWriter()
 
-	if err = writer.Write(p.ProtocolVersionOrEntityId); err != nil {
+	if err = writer.Write(p.ProtocolVersionOrEntityID); err != nil {
 		return nil, fmt.Errorf("001 write protocol version: %w", err)
 	}
 
@@ -43,7 +43,7 @@ func (p Packet1Login) Bytes() ([]byte, error) {
 func (p Packet1Login) Read(reader PacketReader) error {
 	var err error
 
-	if p.ProtocolVersionOrEntityId, err = reader.Int32(); err != nil {
+	if p.ProtocolVersionOrEntityID, err = reader.Int32(); err != nil {
 		return fmt.Errorf("001 read protocol version: %w", err)
 	}
 
@@ -74,7 +74,7 @@ func NewPacket1Login(
 	}
 
 	return Packet1Login{
-		ProtocolVersionOrEntityId: protocolVersion,
+		ProtocolVersionOrEntityID: protocolVersion,
 		Username:                  username,
 		MapSeed:                   mapSeed,
 		Dimension:                 dimension,

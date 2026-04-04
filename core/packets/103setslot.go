@@ -6,14 +6,14 @@ import (
 )
 
 type Packet103SetSlot struct {
-	WindowId  uint8
+	WindowID  uint8
 	Slot      int16
-	ItemId    int16
+	ItemID    int16
 	ItemCount uint8
 	ItemUses  uint8
 }
 
-func (p Packet103SetSlot) Id() uint8 {
+func (p Packet103SetSlot) ID() uint8 {
 	return 0x67
 }
 
@@ -24,7 +24,7 @@ func (p Packet103SetSlot) Bytes() ([]byte, error) {
 func (p Packet103SetSlot) Read(reader PacketReader) error {
 	var err error
 
-	if p.WindowId, err = reader.Byte(); err != nil {
+	if p.WindowID, err = reader.Byte(); err != nil {
 		return fmt.Errorf("103 read windowid: %w", err)
 	}
 
@@ -32,11 +32,11 @@ func (p Packet103SetSlot) Read(reader PacketReader) error {
 		return fmt.Errorf("103 read slot: %w", err)
 	}
 
-	if p.ItemId, err = reader.Int16(); err != nil {
+	if p.ItemID, err = reader.Int16(); err != nil {
 		return fmt.Errorf("103 read itemid: %w", err)
 	}
 
-	if p.ItemId > -1 {
+	if p.ItemID > -1 {
 		if p.ItemCount, err = reader.Byte(); err != nil {
 			return fmt.Errorf("103 read itemid: %w", err)
 		}

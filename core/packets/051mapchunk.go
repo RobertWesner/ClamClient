@@ -16,7 +16,7 @@ type Packet51MapChunk struct {
 	CompressedData []byte
 }
 
-func (p Packet51MapChunk) Id() uint8 {
+func (p Packet51MapChunk) ID() uint8 {
 	return 0x33
 }
 

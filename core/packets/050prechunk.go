@@ -9,7 +9,7 @@ import (
 type Packet50PreChunk struct {
 }
 
-func (p Packet50PreChunk) Id() uint8 {
+func (p Packet50PreChunk) ID() uint8 {
 	return 0x32
 }
 

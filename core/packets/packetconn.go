@@ -26,7 +26,7 @@ func (pc PacketConn) Write(packet Packet) error {
 
 	_, err = pc.conn.Write(
 		append(
-			[]byte{packet.Id()},
+			[]byte{packet.ID()},
 			bytes...,
 		),
 	)

@@ -42,12 +42,12 @@ func (c *Client) handlePackets() {
 			c.state.SpawnPosition = game.NewVec3(float64(p.X), float64(p.Y), float64(p.Z))
 			close(c.ready)
 		case packets.Packet31EntityRelativeMove:
-			c.events.on.entityMove <- EntityMoveEvent{int(p.EntityId), game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}
+			c.events.on.entityMove <- EntityMoveEvent{int(p.EntityID), game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}
 		case packets.Packet32EntityLook:
-			c.events.on.entityLook <- EntityLookEvent{int(p.EntityId), game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}
+			c.events.on.entityLook <- EntityLookEvent{int(p.EntityID), game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}
 		case packets.Packet33LookAndRelativeMove:
-			c.events.on.entityMove <- EntityMoveEvent{int(p.EntityId), game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}
-			c.events.on.entityLook <- EntityLookEvent{int(p.EntityId), game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}
+			c.events.on.entityMove <- EntityMoveEvent{int(p.EntityID), game.NewVec3(float64(p.DX), float64(p.DY), float64(p.DZ))}
+			c.events.on.entityLook <- EntityLookEvent{int(p.EntityID), game.NewAngle(float64(p.Pitch.To360()), float64(p.Yaw.To360()))}
 		case packets.Packet51MapChunk:
 			// TODO TODO TODO !!!
 			HandleChunkData(p)
@@ -63,11 +63,11 @@ func (c *Client) handlePackets() {
 				// ignore
 			}
 		case packets.Packet103SetSlot:
-			c.events.on.setSlot <- SetSlotEvent{int(p.WindowId), int(p.Slot), int(p.ItemId), int(p.ItemCount), int(p.ItemUses)}
+			c.events.on.setSlot <- SetSlotEvent{int(p.WindowID), int(p.Slot), int(p.ItemID), int(p.ItemCount), int(p.ItemUses)}
 		case packets.Packet104WindowItems:
-			c.events.on.windowItems <- WindowItemsEvent{int(p.WindowId), int(p.Count), p.Payload}
+			c.events.on.windowItems <- WindowItemsEvent{int(p.WindowID), int(p.Count), p.Payload}
 		case packets.Packet106Transaction:
-			c.events.on.transaction <- TransactionEvent{int(p.WindowId), int(p.ActionNumber), p.Accepted}
+			c.events.on.transaction <- TransactionEvent{int(p.WindowID), int(p.ActionNumber), p.Accepted}
 		case packets.Packet255Disconnect:
 			c.events.on.disconnect <- p.Reason
 		}

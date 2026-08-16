@@ -11,7 +11,8 @@ import (
 )
 
 func main() {
-	c := client.Connect("localhost:9004", "RobertWesner2")
+	//c := client.Connect("localhost:25565", "RobertWesner2")
+	c := client.Connect("betamc.org:25565", "RobertWesner2")
 
 	go func() {
 		select {
@@ -68,6 +69,8 @@ func main() {
 			case reason := <-c.Events().Disconnect():
 				fmt.Println(reason)
 			case <-c.Events().BlockChange():
+				break
+			case <-c.Events().Rain():
 				break
 			}
 		}

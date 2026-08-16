@@ -101,6 +101,13 @@ func Connect(ip string, username string) (c *Client) {
 
 	go c.handlePackets()
 
+	err = c.packetConn.Write(packets.NewPacket2Handshake(c.username))
+	if err != nil {
+		c.fail(err)
+
+		return
+	}
+
 	// TODO: move to own method :)
 	err = c.packetConn.Write(packets.NewPacket1Login(14, username, 0, 0))
 	if err != nil {

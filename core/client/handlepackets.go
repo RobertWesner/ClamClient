@@ -22,13 +22,6 @@ func (c *Client) handlePackets() {
 			break
 		case *packets.Packet1Login:
 			fmt.Println(p) // TODO: remove
-
-			//err = c.packetConn.Write(packets.NewPacket2Handshake(c.username))
-			//if err != nil {
-			//	c.fail(err)
-			//
-			//	return
-			//}
 		case *packets.Packet2Handshake:
 			fmt.Println(p) // TODO: remove
 

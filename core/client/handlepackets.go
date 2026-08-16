@@ -52,6 +52,19 @@ func (c *Client) handlePackets() {
 		case packets.Packet51MapChunk:
 			// TODO TODO TODO !!!
 			HandleChunkData(p)
+		case packets.Packet52MultiBlockChange:
+			for i := int16(0); i < p.ArraySize; i++ {
+				coords := p.CoordinateArray[i]
+				x := (coords >> 12) & 0x0F
+				z := (coords >> 8) & 0x0F
+				y := coords & 0xFF
+
+				c.events.on.blockChange <- BlockChangeEvent{
+					int(p.ChunkX)*16 + int(x), int(y), int(p.ChunkZ)*16 + int(z),
+					material.FromID(int(p.TypeArray[i])),
+					p.MetadataArray[i],
+				}
+			}
 		case packets.Packet53BlockChange:
 			c.events.on.blockChange <- BlockChangeEvent{int(p.X), int(p.Y), int(p.Z), material.FromID(int(p.BlockType)), p.BlockMetadata}
 		case packets.Packet70NewOrInvalidState:

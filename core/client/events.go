@@ -159,3 +159,7 @@ func (e *Events) Transaction() <-chan TransactionEvent {
 func (e *Events) Disconnect() <-chan string {
 	return e.disconnect
 }
+
+func (e *Events) BlockChange() <-chan BlockChangeEvent {
+	return e.blockChange
+}

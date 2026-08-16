@@ -67,6 +67,8 @@ func main() {
 				break
 			case reason := <-c.Events().Disconnect():
 				fmt.Println(reason)
+			case <-c.Events().BlockChange():
+				break
 			}
 		}
 	}()

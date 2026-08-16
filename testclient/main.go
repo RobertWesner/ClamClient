@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	c := client.Connect("localhost:25565", "RobertWesner2")
+	c := client.Connect("localhost:9004", "RobertWesner2")
 
 	go func() {
 		select {

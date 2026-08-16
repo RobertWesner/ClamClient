@@ -2,6 +2,7 @@ package client
 
 import (
 	"github.com/RobertWesner/ClamClient/core/game"
+	"github.com/RobertWesner/ClamClient/core/material"
 	"github.com/RobertWesner/ClamClient/core/packets"
 )
 
@@ -32,7 +33,7 @@ type MapChunkEvent struct {
 type SetSlotEvent struct {
 	WindowID  int
 	Slot      int
-	ItemID    int
+	ItemID    material.Material
 	ItemCount int
 	ItemUses  int
 }
@@ -49,6 +50,14 @@ type TransactionEvent struct {
 	Accepted     bool
 }
 
+type BlockChangeEvent struct {
+	X             int
+	Y             int
+	Z             int
+	BlockType     material.Material
+	BlockMetadata uint8
+}
+
 type Events struct {
 	chat              <-chan string
 	playerMoveAndLook <-chan PlayerMoveAndLookEvent
@@ -59,6 +68,7 @@ type Events struct {
 	windowItems       <-chan WindowItemsEvent
 	transaction       <-chan TransactionEvent
 	disconnect        <-chan string
+	blockChange       <-chan BlockChangeEvent
 
 	on eventsOn
 }
@@ -73,6 +83,7 @@ type eventsOn struct {
 	windowItems       chan<- WindowItemsEvent
 	transaction       chan<- TransactionEvent
 	disconnect        chan<- string
+	blockChange       chan<- BlockChangeEvent
 }
 
 func NewEvents() *Events {
@@ -85,6 +96,7 @@ func NewEvents() *Events {
 	windowItems := make(chan WindowItemsEvent)
 	transaction := make(chan TransactionEvent)
 	disconnect := make(chan string)
+	blockChange := make(chan BlockChangeEvent)
 
 	return &Events{
 		chat:              chat,
@@ -96,6 +108,7 @@ func NewEvents() *Events {
 		windowItems:       windowItems,
 		transaction:       transaction,
 		disconnect:        disconnect,
+		blockChange:       blockChange,
 		on: eventsOn{
 			chat:              chat,
 			playerMoveAndLook: playerMoveAndLook,
@@ -106,6 +119,7 @@ func NewEvents() *Events {
 			windowItems:       windowItems,
 			transaction:       transaction,
 			disconnect:        disconnect,
+			blockChange:       blockChange,
 		},
 	}
 }

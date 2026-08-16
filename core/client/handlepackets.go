@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/RobertWesner/ClamClient/core/game"
+	"github.com/RobertWesner/ClamClient/core/material"
 	"github.com/RobertWesner/ClamClient/core/packets"
 )
 
@@ -51,6 +52,8 @@ func (c *Client) handlePackets() {
 		case packets.Packet51MapChunk:
 			// TODO TODO TODO !!!
 			HandleChunkData(p)
+		case packets.Packet53BlockChange:
+			c.events.on.blockChange <- BlockChangeEvent{int(p.X), int(p.Y), int(p.Z), material.FromID(int(p.BlockType)), p.BlockMetadata}
 		case packets.Packet70NewOrInvalidState:
 			switch p.Reason {
 			case 0:
@@ -63,7 +66,7 @@ func (c *Client) handlePackets() {
 				// ignore
 			}
 		case packets.Packet103SetSlot:
-			c.events.on.setSlot <- SetSlotEvent{int(p.WindowID), int(p.Slot), int(p.ItemID), int(p.ItemCount), int(p.ItemUses)}
+			c.events.on.setSlot <- SetSlotEvent{int(p.WindowID), int(p.Slot), material.FromID(int(p.ItemID)), int(p.ItemCount), int(p.ItemUses)}
 		case packets.Packet104WindowItems:
 			c.events.on.windowItems <- WindowItemsEvent{int(p.WindowID), int(p.Count), p.Payload}
 		case packets.Packet106Transaction:

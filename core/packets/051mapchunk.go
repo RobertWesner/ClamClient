@@ -16,15 +16,15 @@ type Packet51MapChunk struct {
 	CompressedData []byte
 }
 
-func (p Packet51MapChunk) ID() uint8 {
+func (p *Packet51MapChunk) ID() uint8 {
 	return 0x33
 }
 
-func (p Packet51MapChunk) Bytes() ([]byte, error) {
+func (p *Packet51MapChunk) Bytes() ([]byte, error) {
 	return []byte{}, errors.New("051 server->client packets should never be sent")
 }
 
-func (p Packet51MapChunk) Read(reader PacketReader) error {
+func (p *Packet51MapChunk) Read(reader PacketReader) error {
 	var err error
 
 	if p.X, err = reader.Int32(); err != nil {

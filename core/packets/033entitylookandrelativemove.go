@@ -14,15 +14,15 @@ type Packet33LookAndRelativeMove struct {
 	Pitch    Uint8angle // 64 = 90°
 }
 
-func (p Packet33LookAndRelativeMove) ID() uint8 {
+func (p *Packet33LookAndRelativeMove) ID() uint8 {
 	return 0x21
 }
 
-func (p Packet33LookAndRelativeMove) Bytes() ([]byte, error) {
+func (p *Packet33LookAndRelativeMove) Bytes() ([]byte, error) {
 	return []byte{}, errors.New("033 server->client packets should never be sent")
 }
 
-func (p Packet33LookAndRelativeMove) Read(reader PacketReader) error {
+func (p *Packet33LookAndRelativeMove) Read(reader PacketReader) error {
 	var err error
 
 	if p.EntityID, err = reader.Int32(); err != nil {

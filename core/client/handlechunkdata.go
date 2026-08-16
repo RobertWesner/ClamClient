@@ -5,10 +5,11 @@ import (
 	"compress/zlib"
 	"errors"
 	"fmt"
-	"github.com/RobertWesner/ClamClient/core/packets"
 	"io"
 	"log"
 	"os"
+
+	"github.com/RobertWesner/ClamClient/core/packets"
 )
 
 type BlockData struct {
@@ -16,7 +17,7 @@ type BlockData struct {
 
 type ChunkData []BlockData
 
-func HandleChunkData(packet packets.Packet51MapChunk) (ChunkData, error) {
+func HandleChunkData(packet *packets.Packet51MapChunk) (ChunkData, error) {
 	r, err := zlib.NewReader(bytes.NewReader(packet.CompressedData))
 	if err != nil {
 		return nil, err

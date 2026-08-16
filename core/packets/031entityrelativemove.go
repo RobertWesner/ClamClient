@@ -12,15 +12,15 @@ type Packet31EntityRelativeMove struct {
 	DZ       uint8
 }
 
-func (p Packet31EntityRelativeMove) ID() uint8 {
+func (p *Packet31EntityRelativeMove) ID() uint8 {
 	return 0x1F
 }
 
-func (p Packet31EntityRelativeMove) Bytes() ([]byte, error) {
+func (p *Packet31EntityRelativeMove) Bytes() ([]byte, error) {
 	return []byte{}, errors.New("031 server->client packets should never be sent")
 }
 
-func (p Packet31EntityRelativeMove) Read(reader PacketReader) error {
+func (p *Packet31EntityRelativeMove) Read(reader PacketReader) error {
 	var err error
 
 	if p.EntityID, err = reader.Int32(); err != nil {

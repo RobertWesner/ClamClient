@@ -9,15 +9,15 @@ import (
 type Packet50PreChunk struct {
 }
 
-func (p Packet50PreChunk) ID() uint8 {
+func (p *Packet50PreChunk) ID() uint8 {
 	return 0x32
 }
 
-func (p Packet50PreChunk) Bytes() ([]byte, error) {
+func (p *Packet50PreChunk) Bytes() ([]byte, error) {
 	return []byte{}, errors.New("050 server->client packets should never be sent")
 }
 
-func (p Packet50PreChunk) Read(reader PacketReader) error {
+func (p *Packet50PreChunk) Read(reader PacketReader) error {
 	var err error
 
 	if _, err = reader.Int32(); err != nil {

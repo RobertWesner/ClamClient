@@ -13,15 +13,15 @@ type Packet103SetSlot struct {
 	ItemUses  uint8
 }
 
-func (p Packet103SetSlot) ID() uint8 {
+func (p *Packet103SetSlot) ID() uint8 {
 	return 0x67
 }
 
-func (p Packet103SetSlot) Bytes() ([]byte, error) {
+func (p *Packet103SetSlot) Bytes() ([]byte, error) {
 	return []byte{}, errors.New("103 server->client packets should never be sent")
 }
 
-func (p Packet103SetSlot) Read(reader PacketReader) error {
+func (p *Packet103SetSlot) Read(reader PacketReader) error {
 	var err error
 
 	if p.WindowID, err = reader.Byte(); err != nil {

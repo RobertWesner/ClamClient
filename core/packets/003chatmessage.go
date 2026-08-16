@@ -9,11 +9,11 @@ type Packet3ChatMessage struct {
 	Message string
 }
 
-func (p Packet3ChatMessage) ID() uint8 {
+func (p *Packet3ChatMessage) ID() uint8 {
 	return 0x03
 }
 
-func (p Packet3ChatMessage) Bytes() ([]byte, error) {
+func (p *Packet3ChatMessage) Bytes() ([]byte, error) {
 	var err error
 
 	writer := NewWriter()
@@ -25,7 +25,7 @@ func (p Packet3ChatMessage) Bytes() ([]byte, error) {
 	return writer.Bytes(), nil
 }
 
-func (p Packet3ChatMessage) Read(reader PacketReader) error {
+func (p *Packet3ChatMessage) Read(reader PacketReader) error {
 	var err error
 
 	if p.Message, err = reader.String16(); err != nil {
@@ -37,13 +37,13 @@ func (p Packet3ChatMessage) Read(reader PacketReader) error {
 
 func NewPacket3ChatMessage(
 	message string,
-) Packet3ChatMessage {
+) *Packet3ChatMessage {
 	if len(message) > 16 {
 		slog.Warn("003 message is too long, truncating", "message", message)
 		message = message[:100]
 	}
 
-	return Packet3ChatMessage{
+	return &Packet3ChatMessage{
 		Message: message,
 	}
 }

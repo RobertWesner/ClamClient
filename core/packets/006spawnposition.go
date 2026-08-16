@@ -11,15 +11,15 @@ type Packet6SpawnPosition struct {
 	Z int32
 }
 
-func (p Packet6SpawnPosition) ID() uint8 {
+func (p *Packet6SpawnPosition) ID() uint8 {
 	return 0x06
 }
 
-func (p Packet6SpawnPosition) Bytes() ([]byte, error) {
+func (p *Packet6SpawnPosition) Bytes() ([]byte, error) {
 	return []byte{}, errors.New("006 server->client packets should never be sent")
 }
 
-func (p Packet6SpawnPosition) Read(reader PacketReader) error {
+func (p *Packet6SpawnPosition) Read(reader PacketReader) error {
 	var err error
 
 	if p.X, err = reader.Int32(); err != nil {

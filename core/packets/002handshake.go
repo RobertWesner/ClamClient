@@ -9,11 +9,11 @@ type Packet2Handshake struct {
 	UsernameOrConnectionHash string
 }
 
-func (p Packet2Handshake) ID() uint8 {
+func (p *Packet2Handshake) ID() uint8 {
 	return 0x02
 }
 
-func (p Packet2Handshake) Bytes() ([]byte, error) {
+func (p *Packet2Handshake) Bytes() ([]byte, error) {
 	var err error
 
 	writer := NewWriter()
@@ -25,7 +25,7 @@ func (p Packet2Handshake) Bytes() ([]byte, error) {
 	return writer.Bytes(), nil
 }
 
-func (p Packet2Handshake) Read(reader PacketReader) error {
+func (p *Packet2Handshake) Read(reader PacketReader) error {
 	var err error
 
 	if p.UsernameOrConnectionHash, err = reader.String16(); err != nil {
@@ -37,13 +37,13 @@ func (p Packet2Handshake) Read(reader PacketReader) error {
 
 func NewPacket2Handshake(
 	username string,
-) Packet2Handshake {
+) *Packet2Handshake {
 	if len(username) > 16 {
 		slog.Warn("002 username is too long, truncating", "username", username)
 		username = username[:16]
 	}
 
-	return Packet2Handshake{
+	return &Packet2Handshake{
 		UsernameOrConnectionHash: username,
 	}
 }

@@ -12,11 +12,11 @@ type Packet53BlockChange struct {
 	BlockMetadata uint8
 }
 
-func (p Packet53BlockChange) ID() uint8 {
+func (p *Packet53BlockChange) ID() uint8 {
 	return 0x35
 }
 
-func (p Packet53BlockChange) Bytes() ([]byte, error) {
+func (p *Packet53BlockChange) Bytes() ([]byte, error) {
 	var err error
 
 	writer := NewWriter()
@@ -44,7 +44,7 @@ func (p Packet53BlockChange) Bytes() ([]byte, error) {
 	return writer.Bytes(), nil
 }
 
-func (p Packet53BlockChange) Read(reader PacketReader) error {
+func (p *Packet53BlockChange) Read(reader PacketReader) error {
 	var err error
 
 	if p.X, err = reader.Int32(); err != nil {

@@ -12,11 +12,11 @@ type Packet1Login struct {
 	Dimension                 byte
 }
 
-func (p Packet1Login) ID() uint8 {
+func (p *Packet1Login) ID() uint8 {
 	return 0x01
 }
 
-func (p Packet1Login) Bytes() ([]byte, error) {
+func (p *Packet1Login) Bytes() ([]byte, error) {
 	var err error
 
 	writer := NewWriter()
@@ -40,7 +40,7 @@ func (p Packet1Login) Bytes() ([]byte, error) {
 	return writer.Bytes(), nil
 }
 
-func (p Packet1Login) Read(reader PacketReader) error {
+func (p *Packet1Login) Read(reader PacketReader) error {
 	var err error
 
 	if p.ProtocolVersionOrEntityID, err = reader.Int32(); err != nil {
@@ -67,13 +67,13 @@ func NewPacket1Login(
 	username string,
 	mapSeed int64,
 	dimension byte,
-) Packet1Login {
+) *Packet1Login {
 	if len(username) > 16 {
 		slog.Warn("001 username is too long, truncating", "username", username)
 		username = username[:16]
 	}
 
-	return Packet1Login{
+	return &Packet1Login{
 		ProtocolVersionOrEntityID: protocolVersion,
 		Username:                  username,
 		MapSeed:                   mapSeed,

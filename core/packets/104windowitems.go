@@ -11,15 +11,15 @@ type Packet104WindowItems struct {
 	Payload  InventoryData
 }
 
-func (p Packet104WindowItems) ID() uint8 {
+func (p *Packet104WindowItems) ID() uint8 {
 	return 0x68
 }
 
-func (p Packet104WindowItems) Bytes() ([]byte, error) {
+func (p *Packet104WindowItems) Bytes() ([]byte, error) {
 	return []byte{}, errors.New("104 server->client packets should never be sent")
 }
 
-func (p Packet104WindowItems) Read(reader PacketReader) error {
+func (p *Packet104WindowItems) Read(reader PacketReader) error {
 	var err error
 
 	if p.WindowID, err = reader.Byte(); err != nil {

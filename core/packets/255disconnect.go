@@ -8,11 +8,11 @@ type Packet255Disconnect struct {
 	Reason string
 }
 
-func (p Packet255Disconnect) ID() uint8 {
+func (p *Packet255Disconnect) ID() uint8 {
 	return 0xFF
 }
 
-func (p Packet255Disconnect) Bytes() ([]byte, error) {
+func (p *Packet255Disconnect) Bytes() ([]byte, error) {
 	var err error
 
 	writer := NewWriter()
@@ -24,7 +24,7 @@ func (p Packet255Disconnect) Bytes() ([]byte, error) {
 	return writer.Bytes(), nil
 }
 
-func (p Packet255Disconnect) Read(reader PacketReader) error {
+func (p *Packet255Disconnect) Read(reader PacketReader) error {
 	var err error
 
 	if p.Reason, err = reader.String16(); err != nil {
@@ -34,8 +34,8 @@ func (p Packet255Disconnect) Read(reader PacketReader) error {
 	return nil
 }
 
-func NewPacket255Disconnect() Packet255Disconnect {
-	return Packet255Disconnect{
+func NewPacket255Disconnect() *Packet255Disconnect {
+	return &Packet255Disconnect{
 		Reason: "Clam out! o7",
 	}
 }

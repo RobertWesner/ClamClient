@@ -14,11 +14,11 @@ type Packet13PlayerPositionAndLook struct {
 	OnGround bool
 }
 
-func (p Packet13PlayerPositionAndLook) ID() uint8 {
+func (p *Packet13PlayerPositionAndLook) ID() uint8 {
 	return 0x0D
 }
 
-func (p Packet13PlayerPositionAndLook) Bytes() ([]byte, error) {
+func (p *Packet13PlayerPositionAndLook) Bytes() ([]byte, error) {
 	var err error
 
 	writer := NewWriter()
@@ -54,7 +54,7 @@ func (p Packet13PlayerPositionAndLook) Bytes() ([]byte, error) {
 	return writer.Bytes(), nil
 }
 
-func (p Packet13PlayerPositionAndLook) Read(reader PacketReader) error {
+func (p *Packet13PlayerPositionAndLook) Read(reader PacketReader) error {
 	var err error
 
 	if p.X, err = reader.Float64(); err != nil {
@@ -96,8 +96,8 @@ func NewPacket13PlayerPositionAndLook(
 	yaw float32,
 	pitch float32,
 	onGround bool,
-) Packet13PlayerPositionAndLook {
-	return Packet13PlayerPositionAndLook{
+) *Packet13PlayerPositionAndLook {
+	return &Packet13PlayerPositionAndLook{
 		X:        x,
 		Y:        y,
 		Stance:   stance,

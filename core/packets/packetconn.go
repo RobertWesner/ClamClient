@@ -47,19 +47,19 @@ func (pc PacketConn) Read() (Packet, error) {
 	packet := func() Packet {
 		switch buf[0] {
 		case 0x00:
-			return Packet0KeepAlive{}
+			return &Packet0KeepAlive{}
 		case 0x01:
-			return Packet1Login{}
+			return &Packet1Login{}
 		case 0x02:
-			return Packet2Handshake{}
+			return &Packet2Handshake{}
 		case 0x03:
-			return Packet3ChatMessage{}
+			return &Packet3ChatMessage{}
 		case 0x04:
-			return Packet4TimeUpdate{}
+			return &Packet4TimeUpdate{}
 		case 0x05:
 			// TODO
 		case 0x06:
-			return Packet6SpawnPosition{}
+			return &Packet6SpawnPosition{}
 		case 0x07:
 			// TODO
 		case 0x08:
@@ -73,7 +73,7 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x0C:
 			// TODO
 		case 0x0D:
-			return Packet13PlayerPositionAndLook{}
+			return &Packet13PlayerPositionAndLook{}
 		case 0x0E:
 			// TODO
 		case 0x0F:
@@ -107,11 +107,11 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x1E:
 			// TODO
 		case 0x1F:
-			return Packet31EntityRelativeMove{}
+			return &Packet31EntityRelativeMove{}
 		case 0x20:
-			return Packet32EntityLook{}
+			return &Packet32EntityLook{}
 		case 0x21:
-			return Packet33LookAndRelativeMove{}
+			return &Packet33LookAndRelativeMove{}
 		case 0x22:
 			// TODO
 		case 0x26:
@@ -121,13 +121,13 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x28:
 			// TODO
 		case 0x32:
-			return Packet50PreChunk{}
+			return &Packet50PreChunk{}
 		case 0x33:
-			return Packet51MapChunk{}
+			return &Packet51MapChunk{}
 		case 0x34:
-			return Packet52MultiBlockChange{}
+			return &Packet52MultiBlockChange{}
 		case 0x35:
-			return Packet53BlockChange{}
+			return &Packet53BlockChange{}
 		case 0x36:
 			// TODO
 		case 0x3C:
@@ -135,7 +135,7 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x3D:
 			// TODO
 		case 0x46:
-			return Packet70NewOrInvalidState{}
+			return &Packet70NewOrInvalidState{}
 		case 0x47:
 			// TODO
 		case 0x64:
@@ -145,13 +145,13 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0x66:
 			// TODO
 		case 0x67:
-			return Packet103SetSlot{}
+			return &Packet103SetSlot{}
 		case 0x68:
-			return Packet104WindowItems{}
+			return &Packet104WindowItems{}
 		case 0x69:
 			// TODO
 		case 0x6A:
-			return Packet106Transaction{}
+			return &Packet106Transaction{}
 		case 0x82:
 			// TODO
 		case 0x83:
@@ -159,7 +159,7 @@ func (pc PacketConn) Read() (Packet, error) {
 		case 0xC8:
 			// TODO
 		case 0xFF:
-			return Packet255Disconnect{}
+			return &Packet255Disconnect{}
 		}
 
 		return nil

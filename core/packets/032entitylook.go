@@ -11,15 +11,15 @@ type Packet32EntityLook struct {
 	Pitch    Uint8angle // 64 = 90°
 }
 
-func (p Packet32EntityLook) ID() uint8 {
+func (p *Packet32EntityLook) ID() uint8 {
 	return 0x20
 }
 
-func (p Packet32EntityLook) Bytes() ([]byte, error) {
+func (p *Packet32EntityLook) Bytes() ([]byte, error) {
 	return []byte{}, errors.New("032 server->client packets should never be sent")
 }
 
-func (p Packet32EntityLook) Read(reader PacketReader) error {
+func (p *Packet32EntityLook) Read(reader PacketReader) error {
 	var err error
 
 	if p.EntityID, err = reader.Int32(); err != nil {

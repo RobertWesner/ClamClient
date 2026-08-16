@@ -10,11 +10,11 @@ type Packet106Transaction struct {
 	Accepted     bool
 }
 
-func (p Packet106Transaction) ID() uint8 {
+func (p *Packet106Transaction) ID() uint8 {
 	return 0x6A
 }
 
-func (p Packet106Transaction) Bytes() ([]byte, error) {
+func (p *Packet106Transaction) Bytes() ([]byte, error) {
 	var err error
 
 	writer := NewWriter()
@@ -34,7 +34,7 @@ func (p Packet106Transaction) Bytes() ([]byte, error) {
 	return writer.Bytes(), nil
 }
 
-func (p Packet106Transaction) Read(reader PacketReader) error {
+func (p *Packet106Transaction) Read(reader PacketReader) error {
 	var err error
 
 	if p.WindowID, err = reader.Byte(); err != nil {
@@ -56,8 +56,8 @@ func NewPacket106Transaction(
 	windowID uint8,
 	actionNumber int16,
 	accepted bool,
-) Packet106Transaction {
-	return Packet106Transaction{
+) *Packet106Transaction {
+	return &Packet106Transaction{
 		WindowID:     windowID,
 		ActionNumber: actionNumber,
 		Accepted:     accepted,

@@ -13,11 +13,11 @@ type Packet52MultiBlockChange struct {
 	MetadataArray   []uint8
 }
 
-func (p Packet52MultiBlockChange) ID() uint8 {
+func (p *Packet52MultiBlockChange) ID() uint8 {
 	return 0x34
 }
 
-func (p Packet52MultiBlockChange) Bytes() ([]byte, error) {
+func (p *Packet52MultiBlockChange) Bytes() ([]byte, error) {
 	var err error
 
 	writer := NewWriter()
@@ -55,7 +55,7 @@ func (p Packet52MultiBlockChange) Bytes() ([]byte, error) {
 	return writer.Bytes(), nil
 }
 
-func (p Packet52MultiBlockChange) Read(reader PacketReader) error {
+func (p *Packet52MultiBlockChange) Read(reader PacketReader) error {
 	var err error
 
 	if p.ChunkX, err = reader.Int32(); err != nil {
